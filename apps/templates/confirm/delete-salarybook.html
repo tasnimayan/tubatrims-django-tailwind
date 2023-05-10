@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="w-full px-6 py-6 mx-auto border-2">
+      <div class="flex justify-center items-center">
+        <div class="flex-none w-2/3 max-w-full px-3 ">
+          <div class="relative flex flex-col min-w-0 mb-6 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-sm bg-clip-border">
+            <div class="p-6 m-auto bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                <h6>Delete Entry</h6>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="flex-auto px-2 pt-0 pb-2">
+                    <div class="p-0 overflow-x-auto pb-2">
+                        <div>
+                          <div class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent">
+                            <div class="flex px-2 py-1">
+                                <div class="flex flex-col justify-center">
+                                    <h6 class="mb-0 leading-normal text-size-sm">Are you sure you want to delete 
+                                      <span class="text-red-500 text-size-lg">"{{record.description}}"</span> ?</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row justify-center">
+                            <input class="px-4 py-2 mr-2 bg-slate-500 text-white" type="submit" name="Confirm" value="Confirm">
+                            <a class="px-4 py-2 bg-slate-500 text-white" href="{% url 'employee_ledger' %}">Cancel</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </form>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

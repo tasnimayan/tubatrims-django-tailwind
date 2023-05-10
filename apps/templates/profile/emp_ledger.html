@@ -1,0 +1,63 @@
+{% extends 'home/profile-employee.html' %}     
+
+{% block section %}
+        
+        
+<div class="flex-none w-full max-w-full px-3 mt-6">
+    <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+      <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
+        <h6 class="mb-1">Ledger</h6>
+        <p class="leading-normal text-size-sm">One months</p>
+      </div>
+      <div class="flex-auto px-0 pt-0 pb-2">
+          <div class="p-0 overflow-x-auto">
+            <table class="table-fixed items-center justify-center w-full mb-0 align-top border-gray-200 text-slate-500">
+              <thead class="align-bottom text-white bg-slate-500">
+                <tr>
+                  <th class="w-1/10 px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Name</th>
+                  <th class="w-1/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Date</th>
+                  <th class="w-3/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Description</th>
+                  <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Withdraw</th>
+                  <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Balance</th>
+
+                  <th class="w-1/10 px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+              {% for record in page_obj %}
+                <tr>
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                    <p class="px-2 mb-0 font-semibold leading-normal text-size-xs">{{ record.employee.name }}</p>
+                  </td>
+
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                    <p class="mb-0 font-normal leading-normal text-size-xs">{{ record.date }}</p>
+                  </td>
+
+                  <td class="p-2 align-middle bg-transparent border-b whitespace-normal shadow-transparent">
+                    <span class="font-normal leading-normal text-size-sm">{{ record.description }}</span>
+                  </td>
+
+                  <td class="py-2 px-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="mr-2 font-semibold leading-tight text-size-sm">{{ record.withdraw }}</span>
+                  </td>
+
+                  <td class="py-2 px-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                    <span class="mr-2 font-semibold leading-tight text-size-sm"></span>
+                </td>
+
+                  <td class="align-middle text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <a class="relative z-10 inline-block px-2 font-bold text-center text-transparent uppercase align-middle transition-all shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 bg-gradient-red hover:scale-102 bg-clip-text" href="{% url 'del_salarybook' record.id %}"><i class="mr-2 far fa-trash-alt bg-150 bg-clip-text"></i></a>
+                      <a class="inline-block px-2 font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 hover:scale-102 active:opacity-85 bg-x-25 text-slate-700" href="{% url 'update_salarybook' record.id %}"><i class="mr-2 fas fa-pencil-alt text-slate-700" aria-hidden="true" ></i></a>                
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+    </div>
+  </div>
+{% endblock section %}

@@ -1,0 +1,55 @@
+{% extends 'home/profile-employee.html' %}     
+
+{% block section %}
+<div class="flex-none w-full max-w-full px-3 mt-6">
+    <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+      <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
+        <h6 class="mb-1 uppercase">Attendance sheet {{ year|date:"Y"}}</h6>
+      </div>
+
+      <div class="flex-auto px-2 m-4 pt-0 pb-2">
+        <div class="p-0 overflow-x-auto">
+
+          <table class="items-center w-full mb-6 align-top border-gray-200 text-slate-500">
+            <thead class="table-head">
+              <tr>
+                <th class="text-size-sm sticky-td">Month</th>
+                {% for i in 32|get_range %}
+                  <th class="text-size-xs font-normal px-3">{{i}}</th>
+                  
+                {% endfor %}
+                <th class="px-4 text-center text-size-sm">Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for month,dates in employee_attendance.items %}
+              <tr>
+                <td class="px-4 whitespace-nowrap sticky-td">{{month}}</td>
+                <!-- Checkbox placing according to status -->
+                {% for day in 32|get_range %}
+                  {% if day in dates and dates|get_item:day %}
+                    <td class="px-2">
+                      <input type="checkbox" onclick="return false;" checked >
+                    </td> 
+                    {% else %}
+                    <td class="px-2">
+                      <input type="checkbox" onclick="return false;" >
+                    </td>
+                  {% endif %}
+                {% endfor %}
+
+                <td class="text-center text-size-sm">30</td>
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+     
+
+    </div>
+  </div>
+  {% endblock section %}

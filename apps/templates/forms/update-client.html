@@ -1,0 +1,86 @@
+{% extends 'layouts/base-fullscreen.html' %}
+
+{% block title %} Sign UP {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+    <main class="mt-0 transition-all duration-200 ease-soft-in-out">
+
+      <section class="min-h-screen mb-32">
+        <div class="relative flex items-start pt-12 pb-56 m-4 overflow-hidden bg-center bg-cover min-h-50-screen rounded-xl" style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/curved14.jpg')">
+          <span class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-gray opacity-60"></span>
+          
+        </div>
+        <div class="container">
+          <div class="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
+            <div class="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-5/12">
+              <div class="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+                <div class="p-6 mb-0 text-center bg-white border-b-0 rounded-t-2xl">
+                  <h5>Update Client</h5>
+                </div>
+
+                <!-- Input Fields  -->
+                <div class="flex-auto p-6">
+                  <form role="form text-left" method="POST">
+                    {% csrf_token %}
+
+                    <div class="flex flex-row">
+                      <div class="mr-6 w-1/2">
+                        <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Company Name</label>
+                        <div class="mb-4">
+                          <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Company name" name="name" id="name" value="{{client.company_name}}"/>
+                        </div>
+                      </div>
+                      <div class="ml-6 w-1/2">
+                        <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Phone</label>
+                        <div class="mb-4">
+                          <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="01xxx xxx xxx" name="phone" id="phone" value="{{client.phone}}"/>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="flex flex-row">
+                      <div class="mr-6 w-1/2">
+                        <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Client ID</label>
+                        <div class="mb-4">
+                          <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="ID" name="id" id="id" value="{{client.client_id}}" />
+                        </div>
+                      </div>
+                      <div class="ml-6 w-1/2">
+                        <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Email</label>
+                        <div class="mb-4">
+                          <input type="email" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Email" name="mail" id="mail" value="{{client.email}}"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Address</label>
+                    <div class="mb-4">
+                      <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Address" name="address" id="address" value="{{client.address}}"/>
+                    </div>
+                    
+
+                    <!-- Register Button -->
+                    <div class="text-center">
+                      <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-dark-gray hover:border-slate-700 hover:bg-slate-700 hover:text-white">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% include "includes/footer-fullscreen.html" %}
+    </main>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

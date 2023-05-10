@@ -1,0 +1,96 @@
+
+{% extends 'layouts/base.html' %}
+{% load custom_tags %}
+
+{% block title %} Tables {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  table, th, td {
+    border-bottom: 1px solid #d3d3d3;
+    border-collapse: collapse;
+  }
+  .table-head{
+    padding-bottom:10px;
+  }
+  </style>{% endblock stylesheets %}
+
+{% block content %}
+
+
+    <div class="w-full px-6 py-6 mx-auto">
+  
+        <div class="flex flex-wrap -mx-3">
+          <div class="flex-none w-full max-w-full px-3">
+            <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-sm bg-clip-border">
+
+              <form method="POST">
+                {% csrf_token %}
+                <div class="flex p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                  <h6>Attendance Sheet</h6>
+                  <div class="flex justify-center items-center ml-auto pr-4">
+                    <label class="font-bold text-size-xs text-slate-700 px-4">Date</label>
+                    <input type="month" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Date" name="date" id="date" required/>
+
+                    <input type="submit" value="Go" class="px-4 py-2 ml-4 mb-0 font-bold text-center uppercase align-middle transition-all bg-slate-700 border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-size-xs hover:scale-102 active:shadow-soft-xs text-white"/>
+                  </div>
+                </div>
+              </form>
+
+              <div class="flex-auto px-2 ml-4 pt-0 pb-2">
+                <div class="p-0 overflow-x-auto">
+                  <h6>Table for: {{ month|date:"F Y" }}</h1>
+
+                  <table class="items-center w-full mb-6 align-top border-gray-200 text-slate-500">
+                    <thead class="table-head">
+                      <tr>
+                        <th class="text-size-sm">Employee Name</th>
+                        {% for i in day_count %}
+                          <th class="text-size-xs font-normal px-3">{{i}}<p>{{month|get_weekday:i}}</p></th>
+                          
+                        {% endfor %}
+                        <th class="px-4 text-center text-size-sm">Total</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {% for employee,dates in employee_attendance.items %}
+                      <tr class="employee">
+                        <td class="p-4 whitespace-nowrap">{{employee.name}}</td>
+                        
+                        <!-- Checkbox placing according to status -->
+                        {% for day in day_count %}
+                          {% if day in dates and dates|get_item:day %}
+                            <td class="px-2">
+                              <input type="checkbox" onclick="return false;" checked >
+                            </td> 
+                            {% else %}
+                            <td class="px-2">
+                              <input type="checkbox" onclick="return false;" >
+                            </td>
+                          {% endif %}
+                        {% endfor %}
+
+                        <td class="text-center text-size-sm">{{dates|get_valuecount}}</td>
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+  
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+{% endblock javascripts %}

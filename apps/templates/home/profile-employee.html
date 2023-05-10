@@ -1,0 +1,257 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Profile {% endblock title %}
+{% load custom_tags %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  table, th, td {
+    border: 1px solid #d3d3d3;
+    border-collapse: collapse;
+    background:#e7f7e7;
+  }
+  .total{
+    background-color: rgb(243 244 246);
+  }
+  .table-head{
+    padding-bottom:10px;
+  }
+  .sticky-td{
+    position: sticky;
+    left:0;
+  }
+  </style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="w-full px-6 mx-auto"> 
+
+      <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl" style="background-image: url('{{ ASSETS_ROOT }}/img/curved-images/curved0.jpg'); background-position-y: 50%">
+        <span class="absolute inset-y-0 w-full h-full bg-center bg-cover bg-gradient-fuchsia opacity-60"></span>
+      </div>
+      <div class="relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
+        <div class="flex flex-wrap -mx-3">
+          <div class="flex-none w-auto max-w-full px-3">
+            <div class="text-size-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
+              <img src="{{ ASSETS_ROOT }}/img/bruce-mars.jpg" alt="profile_image" class="w-full shadow-soft-sm rounded-xl" />
+            </div>
+          </div>
+          <div class="flex-none w-auto max-w-full px-3 my-auto">
+            <div class="h-full">
+              <h5 class="mb-1">{{ employee.name }}</h5>
+              <p class="mb-0 font-semibold leading-normal text-size-sm">Employee</p>
+            </div>
+          </div>
+          
+
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full p-6 mx-auto">
+
+      <div class="flex flex-wrap -mx-3">
+        <div class="w-full max-w-full px-3 lg-max:mt-6">
+          <div class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+              <div class="flex flex-wrap -mx-3">
+                <div class="flex items-center w-full max-w-full px-3 shrink-0 md:flex-none">
+                  <h6 class="mb-0">Profile Information</h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-row p-4 w-full">
+              <div class="w-1/3 sm:w-full md:w-1/2">
+                <ul class="flex flex-col pl-0 mb-0">
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Employee ID:</strong> &nbsp; {{employee.emp_id}}</li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Mobile:</strong> &nbsp; (+88) {{employee.phone}}</li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Address:</strong> &nbsp; {{ employee.address }}</li>
+                </ul>
+              </div>
+              <div class="w-1/3 sm:w-full md:w-1/2">
+                <ul class="flex flex-col pl-0 mb-0">
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Age:</strong> &nbsp; {{employee.age}}</li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Gender:</strong> &nbsp; {{employee.gender}}</li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Salary:</strong> &nbsp; {{ employee.salary }}</li>
+                </ul>
+              </div>
+              <div class="w-1/3 sm:w-full md:w-1/2">
+                <ul class="flex flex-col pl-0 mb-0">
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Guardian:</strong> &nbsp; {{ employee.g_name }}</li>
+                  <li class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-size-sm text-inherit"><strong class="text-slate-700">Guardian Phone:</strong> &nbsp; {{ employee.g_phone }}</li>
+                </ul>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex-none w-full max-w-full px-3 mt-6">
+          <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+            <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
+              <h6 class="mb-1 uppercase">Attendance sheet {{ year|date:"Y"}}</h6>
+            </div>
+
+            <div class="flex-auto px-2 m-4 pt-0 pb-2">
+              <div class="p-0 overflow-x-auto">
+
+                <table class="items-center w-full mb-6 align-top border-gray-200 text-slate-500">
+                  <thead class="table-head">
+                    <tr>
+                      <th class="text-size-sm sticky-td">Month</th>
+                      {% for i in 32|get_range %}
+                        <th class="text-size-xs font-normal px-3">{{i}}</th>
+                        
+                      {% endfor %}
+                      <th class="px-4 text-center text-size-sm">Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for month,dates in employee_attendance.items %}
+                    <tr>
+                      <td class="px-4 whitespace-nowrap sticky-td">{{month}}</td>
+                      <!-- Checkbox placing according to status -->
+                      {% for day in 32|get_range %}
+                        {% if day in dates and dates|get_item:day %}
+                          <td class="px-2">
+                            <input type="checkbox" onclick="return false;" checked >
+                          </td> 
+                          {% else %}
+                          <td class="px-2">
+                            <input type="checkbox" onclick="return false;" >
+                          </td>
+                        {% endif %}
+                      {% endfor %}
+
+                      <td class="text-center text-size-sm">{{dates|get_valuecount}}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+           
+
+          </div>
+        </div>
+
+        <div class="flex-none w-full max-w-full px-3 mt-6">
+          <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+            
+            <form method="POST">
+              {% csrf_token %}
+              <div class="flex p-6 pb-0 mb-2 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                <h6>'{{employee.name}}' Ledger</h6>
+                <div class="flex justify-center items-center ml-auto pr-4">
+                  <label class="font-bold text-size-xs text-slate-700 px-4">Date</label>
+                  <input type="month" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Date" name="date" id="date" required/>
+  
+                  <input type="submit" value="Go" class="px-4 py-2 ml-4 mb-0 font-bold text-center uppercase align-middle transition-all bg-slate-700 border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-size-xs hover:scale-102 active:shadow-soft-xs text-white"/>
+                </div>
+              </div>
+            </form>
+            <div class="flex-auto px-0 pt-0 pb-2">
+                <div class="p-0 overflow-x-auto">
+                  <table class="table-fixed items-center justify-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                    <thead class="align-bottom text-white bg-slate-500">
+                      <tr>
+                        
+                        <th class="w-1/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Date</th>
+                        <th class="w-3/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Description</th>
+                        <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Withdraw</th>
+                        <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Balance</th>
+    
+                        <th class="w-1/10 px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+    
+                    {% for record in page_obj %}
+                      <tr>
+    
+                        <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                          <p class="mb-0 font-normal leading-normal text-size-xs">{{ record.date }}</p>
+                        </td>
+    
+                        <td class="p-2 align-middle bg-transparent border-b whitespace-normal shadow-transparent">
+                          <span class="font-normal leading-normal text-size-sm">{{ record.description }}</span>
+                        </td>
+    
+                        <td class="py-2 px-4 align-middle bg-transparent text-right border-b whitespace-nowrap shadow-transparent">
+                            <span class="mr-2 font-semibold leading-tight text-size-sm">{{ record.withdraw }}</span>
+                        </td>
+    
+                        <td class="py-2 px-4 align-middle bg-transparent text-right border-b whitespace-nowrap shadow-transparent">
+                          <span class="mr-2 font-semibold leading-tight text-size-sm"></span>
+                        </td>
+    
+                        <td class="align-middle text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                            <a class="relative z-10 inline-block px-2 font-bold text-center text-transparent uppercase align-middle transition-all shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 bg-gradient-red hover:scale-102 bg-clip-text" href="{% url 'del_salarybook' record.id %}"><i class="mr-2 far fa-trash-alt bg-150 bg-clip-text"></i></a>
+                            <a class="inline-block px-2 font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 hover:scale-102 active:opacity-85 bg-x-25 text-slate-700" href="{% url 'update_salarybook' record.id %}"><i class="mr-2 fas fa-pencil-alt text-slate-700" aria-hidden="true" ></i></a>                
+                        </td>
+                      </tr>
+                    {% endfor %}
+                      <tr class="total">
+    
+                        <td colspan = "2" class="p-2 align-middle bg-transparent text-right border-b whitespace-normal shadow-transparent">
+                          <span class="font-normal leading-normal text-size-sm">TOTAL</span>
+                        </td>
+    
+                        <td class="py-2 px-4 align-middle bg-transparent text-right text-black border-b whitespace-nowrap shadow-transparent">
+                            <span class="mr-2 font-semibold leading-tight text-size-sm ">&equals;  {{total|get_item:'sum'}}</span>
+                        </td>
+    
+                        <td class="py-2 px-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                          <span class="mr-2 font-semibold leading-tight text-size-sm"></span>
+                        </td>
+    
+                        <td class="align-middle text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                           
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+    
+                </div>
+              </div>
+          </div>
+          <!-- Pagination starts from here -->
+        {% if page_obj.has_other_pages %}
+        <div class="mb-12">
+          <div class="flex justify-center items-center">
+            <span>
+              {% if page_obj.has_previous %}
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page=1">&lt;&lt;</a>
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.previous_page_number}}">&lt;</a>
+              {% endif %}
+                <span class="text-size-xs px-2">page {{ page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+            </span>
+            <span>
+              {% if page_obj.has_next %}
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.next_page_number}}">&gt;</a>
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.paginator.num_pages}}">&gt;&gt;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Pagination ends here -->
+        </div>
+        
+      </div>
+
+      {% include "includes/footer.html" %} 
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

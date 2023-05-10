@@ -1,0 +1,206 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+  .table-fixed{
+    table-layout: fixed;
+  }
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="w-full px-6 py-6 mx-auto">
+
+    <!-- table -->
+    <div class="flex flex-wrap -mx-3">
+      <div class="flex-none w-full max-w-full px-3">
+        
+        <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-sm bg-clip-border">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="flex p-6 pb-0 mb-2 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+              <h6>Employee Ledger</h6>
+              <div class="flex justify-center items-center ml-auto pr-4">
+                <label class="font-bold text-size-xs text-slate-700 px-4">Date</label>
+                <input type="month" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Date" name="date" id="date" required/>
+
+                <input type="submit" value="Go" class="px-4 py-2 ml-4 mb-0 font-bold text-center uppercase align-middle transition-all bg-slate-700 border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-size-xs hover:scale-102 active:shadow-soft-xs text-white"/>
+              </div>
+            </div>
+          </form>
+
+          <!-- <div class="p-6 pb-0 mb-2 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+            <h6>Employee Ledger</h6>
+          </div> -->
+          <div class="flex-auto px-0 pt-0 pb-2">
+            <div class="p-0 overflow-x-auto">
+              <table class="table-fixed items-center justify-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                <thead class="align-bottom text-white bg-slate-500">
+                  <tr>
+                    <th class="w-1/10 px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Name</th>
+                    <th class="w-1/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Date</th>
+                    <th class="w-3/10 px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Description</th>
+                    <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Withdraw</th>
+                    <th class="w-1/10 px-6 py-3 pl-2 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-sm border-b-solid tracking-none whitespace-nowrap">Balance</th>
+
+                    <th class="w-1/10 px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                {% for record in page_obj %}
+                  <tr>
+                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <p class="px-2 mb-0 font-semibold leading-normal text-size-xs">{{ record.employee.name }}</p>
+                    </td>
+
+                    <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <p class="mb-0 font-normal leading-normal text-size-xs">{{ record.date }}</p>
+                    </td>
+
+                    <td class="p-2 align-middle bg-transparent border-b whitespace-normal shadow-transparent">
+                      <span class="font-normal leading-normal text-size-sm">{{ record.description }}</span>
+                    </td>
+
+                    <td class="py-2 px-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                        <span class="mr-2 font-semibold leading-tight text-size-sm">{{ record.withdraw }}</span>
+                    </td>
+
+                    <td class="py-2 px-4 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                      <span class="mr-2 font-semibold leading-tight text-size-sm"></span>
+                  </td>
+
+                    <td class="align-middle text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                        <a class="relative z-10 inline-block px-2 font-bold text-center text-transparent uppercase align-middle transition-all shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 bg-gradient-red hover:scale-102 bg-clip-text" href="{% url 'del_salarybook' record.id %}"><i class="mr-2 far fa-trash-alt bg-150 bg-clip-text"></i></a>
+                        <a class="inline-block px-2 font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-size-xs ease-soft-in bg-150 hover:scale-102 active:opacity-85 bg-x-25 text-slate-700" href="{% url 'update_salarybook' record.id %}"><i class="mr-2 fas fa-pencil-alt text-slate-700" aria-hidden="true" ></i></a>                
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <div class="p-6 pb-0 mb-2 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                <div class="flex-none max-w-full px-3 text-right">
+                  <a class="show-modal inline-block px-6 py-3 font-bold text-center text-black uppercase align-middle transition-all bg-transparent rounded-lg cursor-pointer leading-pro text-size-xs ease-soft-in shadow-soft-md bg-150 hover:shadow-soft-xs active:opacity-85 hover:scale-102 tracking-tight-soft bg-x-25" href="javascript:;"> <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add New</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form entry starts from here -->
+        <form role="form text-left" method="POST" autocomplete="off">
+          {% csrf_token %}
+        <div class="relative flex flex-col min-w-0 mb-12 break-words bg-white border-2 border-slate-500 border-solid shadow-soft-xl rounded-sm bg-clip-border">
+          <div class="modal flex-auto px-0 pt-0 pb-2 hidden">
+            <div class="p-0 overflow-x-auto">
+              <table class="items-center justify-center w-full mb-0 align-top text-slate-500">
+                <tbody>
+                  <tr>
+                    <td class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent">
+                      <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">ID</label>
+                      <div class="mb-4">
+                        <select name="emp_id" id="emp_id" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-200 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
+                          {% for employee in employees %}
+                          <option value="{{employee}}" >{{employee.emp_id}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                        
+                          
+                        
+                    </td>
+    
+                    <td class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent">
+                      <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Date</label>
+                      <div class="mb-4">
+                        <input type="date" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Date" name="date" id="date" required/>
+                      </div>
+                    </td>
+    
+    
+                    <td class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent">
+                      <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Description</label>
+                      <div class="mb-4">
+                        <input type="text" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Description" name="description" id="description"/>
+                      </div>
+                    </td>
+    
+                    <td class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent">
+                      <label class="mb-2 ml-1 font-bold text-size-xs text-slate-700">Withdraw</label>
+                      <div class="mb-4">
+                        <input type="number" class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow" placeholder="Withdraw" name="withdraw" id="withdraw" value="0" />
+                      </div>
+                    </td>
+    
+                  </tr>
+    
+                </tbody>
+              </table>
+    
+              <!-- Entry Submit Button -->
+              <div class="flex mr-2 overflow-hidden">
+                <div class="text-center mr-0 ml-auto">
+                  <input type="submit" value="Add entry" class="inline-block px-8 py-2 mb-0 font-bold text-center uppercase align-middle transition-all bg-slate-700 border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-size-xs hover:scale-102 active:shadow-soft-xs text-white hover:border-slate-700hover:text-slate-700 hover:opacity-75 hover:shadow-none active:bg-slate-700 active:text-slate-700 active:hover:bg-transparent active:hover:text-slate-700"></input>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+        <!-- Data entry form ends here -->
+
+        <!-- Pagination starts from here -->
+        {% if page_obj.has_other_pages %}
+        <div class="mb-12">
+          <div class="flex justify-center items-center">
+            <span>
+              {% if page_obj.has_previous %}
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page=1">&lt;&lt;</a>
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.previous_page_number}}">&lt;</a>
+              {% endif %}
+                <span class="text-size-xs px-2">page {{ page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+            </span>
+            <span>
+              {% if page_obj.has_next %}
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.next_page_number}}">&gt;</a>
+                <a class="px-4 py-2 border-2 border-gray-500 text-slate-700 shadow-soft-lg" href="?page={{page_obj.paginator.num_pages}}">&gt;&gt;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Pagination ends here -->
+
+      </div>
+    </div>
+
+  </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+<script>
+  const modal = document.querySelector('.modal');
+  const showModal = document.querySelector('.show-modal');
+  var click_count = 0;
+  showModal.addEventListener('click', function(){
+    if (click_count == 0){
+      modal.classList.remove('hidden');
+      click_count = 1;
+    }
+    else{
+      modal.classList.add('hidden');
+      click_count = 0;
+    }
+  });
+
+</script>
+
+{% endblock javascripts %}
